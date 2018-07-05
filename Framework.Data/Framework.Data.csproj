@@ -16,7 +16,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mapper\" />
+    <Compile Remove="Mapper\**" />
+    <EmbeddedResource Remove="Mapper\**" />
+    <None Remove="Mapper\**" />
   </ItemGroup>
 
   <ItemGroup>
