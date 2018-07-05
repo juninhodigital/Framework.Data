@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Framework.Services.Data</PackageId>
+    <Description>Framework.Services.Data</Description>
+    <Authors>Jose Carlos de Jesus Junior</Authors>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/juninhodigital/Framework.Data/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/juninhodigital/Framework.Data</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/juninhodigital/Framework.Core/blob/master/Icons/FS_IconSmall.png?raw=true</PackageIconUrl>
+    <RepositoryUrl>https://github.com/juninhodigital/Framework.Data</RepositoryUrl>
+    <PackageTags>Data Services, Data Helper, Data Library, SQL Library</PackageTags>
+    <Version>1.0.2</Version>
+    <NeutralLanguage>English (United States)</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Mapper\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Framework.Entity" Version="1.0.0" />
+    <PackageReference Include="Framework.Services.Core" Version="1.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+  </ItemGroup>
+
+</Project>
