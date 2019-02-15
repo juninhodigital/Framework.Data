@@ -29,8 +29,8 @@ namespace Framework.Data
         /// <param name="DI"></param>
         public DatabaseCore(ContainerDI DI)
         {
-            DB = DI.databaseRepository;
-            DB.SetManager(DI.databaseManager);
+            DB = DI.DatabaseRepository;
+            DB.SetContext(DI.DatabaseContext);
 
             DI = null;
         }       
@@ -55,42 +55,34 @@ namespace Framework.Data
         /// <summary>
         /// Adds the specified IDbDataParameter object to the parameter collection
         /// </summary>
-        /// <param name="oDbParameter">IDbDataParameter</param>
-        public void AddParam(IDbDataParameter oDbParameter)
+        /// <param name="dbDataParameter">IDbDataParameter</param>
+        public void AddParam(IDbDataParameter dbDataParameter)
         {
-            DB.AddParam(oDbParameter);
+            DB.AddParam(dbDataParameter);
         }
 
         /// <summary>
         /// Fill the property value of the Business Entity Structured Class with the information in the IDataReader
         /// </summary>
-        /// <param name="oIDataReader">IDataReader</param>
-        /// <param name="Sender">Class derived from the Framework.Entity.BussinessEntityStructure class</param>
-        /// <param name="oType">Type of Sender</param>
-        /// <param name="TypeName">Gets the name of the current member.</param>
-        /// <param name="oSchema">List of the columns avaiable in the IDataReader</param>
-        /// <param name="MustRaiseException">Indicates whether an exception will be throw in case of failure</param>
-        public void BindList<T>(IDataReader oIDataReader, T Sender, Type oType, string TypeName, List<string> oSchema, bool MustRaiseException) where T : BusinessEntityStructure
+        /// <param name="dataReader">IDataReader</param>
+        /// <param name="sender">Class derived from the Framework.Entity.BussinessEntityStructure class</param>
+        /// <param name="type">Type of Sender</param>
+        /// <param name="typeName">Gets the name of the current member.</param>
+        /// <param name="schema">List of the columns avaiable in the IDataReader</param>
+        /// <param name="mustRaiseException">Indicates whether an exception will be throw in case of failure</param>
+        public void BindList<T>(IDataReader dataReader, T sender, Type type, string typeName, List<string> schema, bool mustRaiseException) where T : BusinessEntityStructure
         {
-            DB.BindList<T>(oIDataReader, Sender, oType, TypeName, oSchema, MustRaiseException);
+            DB.BindList<T>(dataReader, sender, type, typeName, schema, mustRaiseException);
         }
-
-        /// <summary>
-        /// Check whether an error occured in all database collection
-        /// </summary>
-        public void CheckErrorsOnAll()
-        {
-            DB.CheckErrorsOnAll();
-        }
-
+       
         /// <summary>
         /// Check if the ParameterName is null or empty
         /// </summary>
-        /// <param name="ParameterName"></param>
+        /// <param name="parameterName"></param>
         /// <returns></returns>
-        public string CheckParameterName(string ParameterName)
+        public string CheckParameterName(string parameterName)
         {
-            return DB.CheckParameterName(ParameterName);
+            return DB.CheckParameterName(parameterName);
         }
 
         /// <summary>
@@ -134,33 +126,33 @@ namespace Framework.Data
         /// Returns a generic collection list with instances of the Business Entity Structured class 
         /// whose properties will be filled with the information from the Database
         /// </summary>
-        /// <param name="oIDataReader">IDataReader</param>
-        /// <param name="IsUsingNextResult">Indicates if is using multiple resultsets</param>
+        /// <param name="dataReader">IDataReader</param>
+        /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public List<T> GetList<T>(IDataReader oIDataReader = null, bool IsUsingNextResult = false) where T : BusinessEntityStructure
+        public List<T> GetList<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure
         {
-            return DB.GetList<T>(oIDataReader, IsUsingNextResult);
+            return DB.GetList<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
         /// Check the parameter value
         /// </summary>
-        /// <param name="ParameterValue">ParameterValue</param>
+        /// <param name="parameterValue">ParameterValue</param>
         /// <returns>object</returns>
-        public object GetParameterValue(object ParameterValue)
+        public object GetParameterValue(object parameterValue)
         {
-            return DB.GetParameterValue(ParameterValue);
+            return DB.GetParameterValue(parameterValue);
         }
 
         /// <summary>
         /// Retuns a generic list of primitive type whose content will be filled with the information from the Database
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="oIDataReader"></param>
+        /// <param name="dataReader"></param>
         /// <returns></returns>
-        public List<T> GetPrimitiveList<T>(IDataReader oIDataReader = null) where T : IComparable
+        public List<T> GetPrimitiveList<T>(IDataReader dataReader = null) where T : IComparable
         {
-            return DB.GetPrimitiveList<T>(oIDataReader);
+            return DB.GetPrimitiveList<T>(dataReader);
         }
 
         /// <summary>
@@ -188,53 +180,53 @@ namespace Framework.Data
         /// <summary>
         /// Returns a System.Data.DataTable that describes the column metadata of the IDataReader
         /// </summary>
-        /// <param name="oIDataReader"></param>
+        /// <param name="dataReader"></param>
         /// <returns></returns>
-        public List<string> GetSchema(IDataReader oIDataReader)
+        public List<string> GetSchema(IDataReader dataReader)
         {
-            return DB.GetSchema(oIDataReader);
+            return DB.GetSchema(dataReader);
         }
 
         /// <summary>
         /// Gets the output of the parameter value
         /// </summary>
         /// <typeparam name="T">T</typeparam>
-        /// <param name="ParameterName">ParameterName</param>
+        /// <param name="parameterName">ParameterName</param>
         /// <returns>An System.Object that is the value of the parameter. The default value is null.</returns>
-        public T GetValue<T>(string ParameterName)
+        public T GetValue<T>(string parameterName)
         {
-            return DB.GetValue<T>(ParameterName);
+            return DB.GetValue<T>(parameterName);
         }
 
         /// <summary>
         /// Adds the specified parameter object to the parameter collection (INPUT)
         /// </summary>
-        /// <param name="ParameterName">Parameter Name</param>
-        /// <param name="ParameterValue">Parameter Value</param>    
-        public void In(string ParameterName, object ParameterValue)
+        /// <param name="parameterName">Parameter Name</param>
+        /// <param name="parameterValue">Parameter Value</param>    
+        public void In(string parameterName, object parameterValue)
         {
-            DB.In(ParameterName, ParameterValue);
+            DB.In(parameterName, parameterValue);
         }
 
         /// <summary>
         /// Adds the specified parameter object to the parameter collection (INPUT)
         /// </summary>
-        /// <param name="ParameterName">Parameter Name</param>
-        /// <param name="ParameterValue">Parameter Value</param>
-        /// <param name="ParameterType">System.Data.SqlDbType</param>
-        public void In(string ParameterName, object ParameterValue, SqlDbType ParameterType)
+        /// <param name="parameterName">Parameter Name</param>
+        /// <param name="parameterValue">Parameter Value</param>
+        /// <param name="sqlDbType">System.Data.SqlDbType</param>
+        public void In(string parameterName, object parameterValue, SqlDbType sqlDbType)
         {
-            DB.In(ParameterName, ParameterValue, ParameterType);
+            DB.In(parameterName, parameterValue, sqlDbType);
         }
 
         /// <summary>
         /// Adds the specified parameter object to the parameter collection (INPUT / OUTPUT)
         /// </summary>
-        /// <param name="ParameterName">Parameter Name</param>
-        /// <param name="ParameterValue">Parameter Value</param>
-        public void InOut(string ParameterName, object ParameterValue)
+        /// <param name="parameterName">Parameter Name</param>
+        /// <param name="parameterValue">Parameter Value</param>
+        public void InOut(string parameterName, object parameterValue)
         {
-            DB.InOut(ParameterName, ParameterValue);
+            DB.InOut(parameterName, parameterValue);
         }
 
         /// <summary>
@@ -246,44 +238,33 @@ namespace Framework.Data
         }
 
         /// <summary>
-        /// Logs the errors into the Database class
-        /// </summary>
-        /// <param name="oDataBaseManager">DataBaseManager</param>
-        /// <param name="oDataBase">DataBase</param>
-        /// <param name="Error">Exception</param>
-        public void LogError(IDatabaseManager oDataBaseManager, IDatabaseContext oDataBase, Exception Error)
-        {
-            DB.LogError(oDataBaseManager, oDataBase, Error);
-        }
-
-        /// <summary>
         /// Returns an instance of the Business Entity Structured class whose properties will be filled with the information from the Database
         /// </summary>
-        /// <param name="oIDataReader">IDataReader</param>
-        /// <param name="IsUsingNextResult">Indicates if is using multiple resultsets</param>
+        /// <param name="dataReader">IDataReader</param>
+        /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
-        public T Map<T>(IDataReader oIDataReader = null, bool IsUsingNextResult = false) where T : BusinessEntityStructure
+        public T Map<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure
         {
-            return DB.Map<T>(oIDataReader, IsUsingNextResult);
+            return DB.Map<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
         /// Adds the specified parameter object to the parameter collection (OUTPUT)
         /// </summary>
-        /// <param name="ParameterName">Parameter Name</param>
-        /// <param name="ParameterType">System.Data.DbType</param>
-        /// <param name="ParameterValue">ParameterValue</param>     
-        public void Out(string ParameterName, SqlDbType ParameterType, object ParameterValue = null)
+        /// <param name="parameterName">Parameter Name</param>
+        /// <param name="sqlDbType">System.Data.DbType</param>
+        /// <param name="parameterValue">ParameterValue</param>     
+        public void Out(string parameterName, SqlDbType sqlDbType, object parameterValue = null)
         {
-            DB.Out(ParameterName, ParameterType, ParameterValue);
+            DB.Out(parameterName, sqlDbType, parameterValue);
         }
 
         /// <summary>
         /// Opens a database connection with the property settings specified in the ConnectionString.
         /// </summary>
-        public void Prepare(IDatabaseContext oDataBase)
+        public void Prepare()
         {
-            DB.Prepare(oDataBase);
+            DB.Prepare();
         }
 
         /// <summary>
@@ -307,20 +288,20 @@ namespace Framework.Data
         /// <summary>
         /// Configures the System.Data.CommandType and the T-SQL statement that will be executed on the Database
         /// </summary>
-        /// <param name="CommandType">System.Data.CommandType</param>
-        /// <param name="Statement">T-SQL Statement</param>
-        public void Run(string Statement, CommandType CommandType = CommandType.StoredProcedure)
+        /// <param name="commandType">System.Data.CommandType</param>
+        /// <param name="statement">T-SQL Statement</param>
+        public void Run(string statement, CommandType commandType = CommandType.StoredProcedure)
         {
-            DB.Run(Statement, CommandType);
+            DB.Run(statement, commandType);
         }
 
         /// <summary>
-        /// Sets the DataBaseManager to execute operations against the DataBase
+        /// Sets the database context to execute operations against the DataBase
         /// </summary>
-        /// <param name="oDM">DataBaseManager</param>
-        public void SetManager(IDatabaseManager oDM)
+        /// <param name="databaseContext">IDatabaseContext</param>
+        public void SetContext(IDatabaseContext databaseContext)
         {
-            DB.SetManager(oDM);
+            DB.SetContext(databaseContext);
         } 
 
         #endregion

@@ -10,19 +10,14 @@ namespace Framework.Data
         #region| Fields |
 
         /// <summary>
-        /// Connection Manager
+        /// Database Context
         /// </summary>
-        public IConnectionManager connectionManager;
-
-        /// <summary>
-        /// Database Manager
-        /// </summary>
-        public IDatabaseManager databaseManager;
+        public IDatabaseContext DatabaseContext;
 
         /// <summary>
         /// Database Repository
         /// </summary>
-        public readonly IDatabaseRepository databaseRepository;
+        public readonly IDatabaseRepository DatabaseRepository;
 
         #endregion
 
@@ -31,14 +26,12 @@ namespace Framework.Data
         /// <summary>
         /// Default constructor for dependency injection
         /// </summary>
-        /// <param name="_connectionManager">_connectionManager</param>
         /// <param name="_databaseManager"></param>
-        /// <param name="_databaseRepository"></param>
-        public ContainerDI(IConnectionManager _connectionManager, IDatabaseManager _databaseManager, IDatabaseRepository _databaseRepository)
+        /// <param name="databaseRepository"></param>
+        public ContainerDI(IDatabaseContext databaseContext, IDatabaseRepository databaseRepository)
         {
-            connectionManager  = _connectionManager;
-            databaseRepository = _databaseRepository;
-            databaseManager    = _databaseManager;
+            DatabaseRepository = databaseRepository;
+            DatabaseContext    = databaseContext;
         } 
 
         #endregion
