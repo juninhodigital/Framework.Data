@@ -70,7 +70,7 @@ namespace Framework.Data
         /// <param name="typeName">Gets the name of the current member.</param>
         /// <param name="schema">List of the columns avaiable in the IDataReader</param>
         /// <param name="mustRaiseException">Indicates whether an exception will be throw in case of failure</param>
-        public void BindList<T>(IDataReader dataReader, T sender, Type type, string typeName, List<string> schema, bool mustRaiseException) where T : BusinessEntityStructure
+        public void BindList<T>(IDataReader dataReader, T sender, Type type, string typeName, HashSet<string> schema, bool mustRaiseException) where T : BusinessEntityStructure
         {
             DB.BindList<T>(dataReader, sender, type, typeName, schema, mustRaiseException);
         }
@@ -129,7 +129,7 @@ namespace Framework.Data
         /// <param name="dataReader">IDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public List<T> GetList<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure
+        public IEnumerable<T> GetList<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure
         {
             return DB.GetList<T>(dataReader, isUsingNextResult);
         }
@@ -182,7 +182,7 @@ namespace Framework.Data
         /// </summary>
         /// <param name="dataReader"></param>
         /// <returns></returns>
-        public List<string> GetSchema(IDataReader dataReader)
+        public HashSet<string> GetSchema(IDataReader dataReader)
         {
             return DB.GetSchema(dataReader);
         }

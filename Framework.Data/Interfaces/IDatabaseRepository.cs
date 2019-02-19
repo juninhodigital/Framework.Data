@@ -29,7 +29,7 @@ namespace Framework.Data
         /// <param name="typeName">Gets the name of the current member.</param>
         /// <param name="schema">List of the columns avaiable in the IDataReader</param>
         /// <param name="mustRaiseException">Indicates whether an exception will be throw in case of failure</param>
-        void BindList<T>(IDataReader dataReader, T sender, Type type, string typeName, List<string> schema, bool mustRaiseException) where T : BusinessEntityStructure;
+        void BindList<T>(IDataReader dataReader, T sender, Type type, string typeName, HashSet<string> schema, bool mustRaiseException) where T : BusinessEntityStructure;
 
         /// <summary>
         /// Check if the ParameterName is null or empty
@@ -75,7 +75,7 @@ namespace Framework.Data
         /// <param name="dataReader">IDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        List<T> GetList<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure;
+        IEnumerable<T> GetList<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure;
 
         /// <summary>
         /// Check the parameter value
@@ -113,7 +113,7 @@ namespace Framework.Data
         /// </summary>
         /// <param name="dataReader"></param>
         /// <returns></returns>
-        List<string> GetSchema(IDataReader dataReader);
+        HashSet<string> GetSchema(IDataReader dataReader);
 
         /// <summary>
         /// Gets the output of the parameter value
