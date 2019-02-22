@@ -72,6 +72,14 @@ namespace Framework.Data
         /// Returns a generic collection list with instances of the Business Entity Structured class 
         /// whose properties will be filled with the information from the Database
         /// </summary>
+        /// <returns>Generic Collection List</returns>
+        IEnumerable<T> Query<T>();
+
+
+        /// <summary>
+        /// Returns a generic collection list with instances of the Business Entity Structured class 
+        /// whose properties will be filled with the information from the Database
+        /// </summary>
         /// <param name="dataReader">IDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
