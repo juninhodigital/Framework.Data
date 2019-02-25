@@ -11,8 +11,9 @@
     <PackageIconUrl>https://github.com/juninhodigital/Framework.Core/blob/master/Icons/FS_IconSmall.png?raw=true</PackageIconUrl>
     <RepositoryUrl>https://github.com/juninhodigital/Framework.Data</RepositoryUrl>
     <PackageTags>Data Services, Data Helper, Data Library, SQL Library</PackageTags>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <NeutralLanguage>English (United States)</NeutralLanguage>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,9 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Framework.Entity" Version="1.0.0" />
-    <PackageReference Include="Framework.Services.Core" Version="1.0.2" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+    <PackageReference Include="Framework.Services.Core" Version="1.0.3" />
+    <PackageReference Include="Framework.Services.Entity" Version="1.0.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
