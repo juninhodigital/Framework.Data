@@ -15,6 +15,7 @@
     <NeutralLanguage>English (United States)</NeutralLanguage>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryType>Github</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
