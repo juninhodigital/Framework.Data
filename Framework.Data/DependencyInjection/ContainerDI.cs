@@ -12,7 +12,10 @@ namespace Framework.Data
         /// <summary>
         /// Database Context
         /// </summary>
-        public IDatabaseContext DatabaseContext;
+        public IDatabaseContext DatabaseContext
+        {
+            get; private set;
+        }
 
         /// <summary>
         /// Database Repository

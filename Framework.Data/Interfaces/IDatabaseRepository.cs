@@ -70,11 +70,19 @@ namespace Framework.Data
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 
-        /// whose properties will be filled with the information from the Database
+        /// whose properties will be filled with the information from the Database (using Reflection.Emit)
         /// </summary>
         /// <returns>Generic Collection List</returns>
-        IEnumerable<T> Query<T>();
+        IEnumerable<T> GetList<T>() where T : new();
 
+        /// <summary>
+        /// Returns a generic collection list with instances of the Business Entity Structured class 
+        /// whose properties will be filled with the information from the Database  (using Reflection.Emit)
+        /// </summary>
+        /// <param name="dataReader">IDataReader</param>
+        /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
+        /// <returns>Generic Collection List</returns>
+        IEnumerable<T> GetListOptimized<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 
@@ -83,7 +91,7 @@ namespace Framework.Data
         /// <param name="dataReader">IDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        IEnumerable<T> GetList<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure;
+        IEnumerable<T> GetList<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Check the parameter value
@@ -98,13 +106,13 @@ namespace Framework.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="dataReader"></param>
         /// <returns></returns>
-        List<T> GetPrimitiveList<T>(IDataReader dataReader = null) where T : IComparable;
+        List<T> GetPrimitiveList<T>(IDataReader dataReader = null) where T : IComparable, new();
 
         /// <summary>
         /// Get a IDataReader based on the System.Data.CommandType and the given parameters
         /// </summary>
         /// <returns>System.Data.IDataReader</returns>
-        IDataReader GetReader();
+        SqlDataReader GetReader();
 
         /// <summary>
         /// Executes the query, and returns the first column of the first row in the
@@ -150,8 +158,8 @@ namespace Framework.Data
         /// Adds the specified parameter object to the parameter collection (INPUT / OUTPUT)
         /// </summary>
         /// <param name="parameterName">Parameter Name</param>
-        /// <param name="ParameterValue">Parameter Value</param>       
-        void InOut(string parameterName, object ParameterValue);
+        /// <param name="parameterValue">Parameter Value</param>       
+        void InOut(string parameterName, object parameterValue);
 
         /// <summary>
         /// Check whether the Profiler is enabled or not to log the T-SQL Statements in a log file 
@@ -164,7 +172,7 @@ namespace Framework.Data
         /// <param name="dataReader">IDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
-        T Map<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure;
+        T Map<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Adds the specified parameter object to the parameter collection (OUTPUT)

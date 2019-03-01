@@ -17,22 +17,22 @@ namespace Framework.Data
         /// <summary>
         /// Interface that sets the method's signature that will be implemented by the database repository service
         /// </summary>
-        protected readonly IDatabaseRepository DB;
+        protected readonly IDatabaseRepository databaseRepository;
 
         #endregion
 
         #region| Constructor |
 
         /// <summary>
-        /// Default Constructor 
+        /// Default constructor 
         /// </summary>
-        /// <param name="DI"></param>
-        public DatabaseCore(ContainerDI DI)
+        /// <param name="conttainer">Dependency injection container</param>
+        public DatabaseCore(ContainerDI conttainer)
         {
-            DB = DI.DatabaseRepository;
-            DB.SetContext(DI.DatabaseContext);
+            databaseRepository = conttainer.DatabaseRepository;
+            databaseRepository.SetContext(conttainer.DatabaseContext);
 
-            DI = null;
+            conttainer = null;
         }       
 
         #endregion
@@ -44,7 +44,7 @@ namespace Framework.Data
         /// </summary>
         public void Dispose()
         {
-            DB.Dispose();
+            databaseRepository.Dispose();
 
         }
 
@@ -58,7 +58,7 @@ namespace Framework.Data
         /// <param name="dbDataParameter">IDbDataParameter</param>
         public void AddParam(IDbDataParameter dbDataParameter)
         {
-            DB.AddParam(dbDataParameter);
+            databaseRepository.AddParam(dbDataParameter);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Framework.Data
         /// <param name="mustRaiseException">Indicates whether an exception will be throw in case of failure</param>
         public void BindList<T>(IDataReader dataReader, T sender, Type type, string typeName, HashSet<string> schema, bool mustRaiseException) where T : BusinessEntityStructure
         {
-            DB.BindList<T>(dataReader, sender, type, typeName, schema, mustRaiseException);
+            databaseRepository.BindList<T>(dataReader, sender, type, typeName, schema, mustRaiseException);
         }
        
         /// <summary>
@@ -82,7 +82,7 @@ namespace Framework.Data
         /// <returns></returns>
         public string CheckParameterName(string parameterName)
         {
-            return DB.CheckParameterName(parameterName);
+            return databaseRepository.CheckParameterName(parameterName);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Framework.Data
         /// <returns>The number of rows affected</returns>
         public int Execute()
         {
-            return DB.Execute();
+            return databaseRepository.Execute();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Framework.Data
         /// <returns>System.Data.DataTable</returns>
         public DataTable GetDataTable()
         {
-            return DB.GetDataTable();
+            return databaseRepository.GetDataTable();
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Framework.Data
         /// <returns>System.Data.DataSet</returns>
         public DataSet GetDataSet()
         {
-            return DB.GetDataSet();
+            return databaseRepository.GetDataSet();
         }
 
         /// <summary>
@@ -119,17 +119,29 @@ namespace Framework.Data
         /// <param name="e"></param>
         public void GetInfoMessage(object sender, SqlInfoMessageEventArgs e)
         {
-            DB.GetInfoMessage(sender, e);
+            databaseRepository.GetInfoMessage(sender, e);
         }
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 
-        /// whose properties will be filled with the information from the Database
+        /// whose properties will be filled with the information from the Database (using Reflection.Emit)
         /// </summary>
         /// <returns>Generic Collection List</returns>
-        public IEnumerable<T> Query<T>()
+        public IEnumerable<T> GetList<T>() where T: new()
         {
-            return DB.Query<T>();
+            return databaseRepository.GetList<T>();
+        }
+
+        /// <summary>
+        /// Returns a generic collection list with instances of the Business Entity Structured class 
+        /// whose properties will be filled with the information from the Database  (using Reflection.Emit)
+        /// </summary>
+        /// <param name="dataReader">IDataReader</param>
+        /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
+        /// <returns>Generic Collection List</returns>
+        public IEnumerable<T> GetListOptimized<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        {
+            return databaseRepository.GetListOptimized<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
@@ -139,9 +151,9 @@ namespace Framework.Data
         /// <param name="dataReader">IDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public IEnumerable<T> GetList<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure
+        public IEnumerable<T> GetList<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
-            return DB.GetList<T>(dataReader, isUsingNextResult);
+            return databaseRepository.GetList<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
@@ -151,7 +163,7 @@ namespace Framework.Data
         /// <returns>object</returns>
         public object GetParameterValue(object parameterValue)
         {
-            return DB.GetParameterValue(parameterValue);
+            return databaseRepository.GetParameterValue(parameterValue);
         }
 
         /// <summary>
@@ -160,18 +172,18 @@ namespace Framework.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="dataReader"></param>
         /// <returns></returns>
-        public List<T> GetPrimitiveList<T>(IDataReader dataReader = null) where T : IComparable
+        public List<T> GetPrimitiveList<T>(IDataReader dataReader = null) where T : IComparable, new()
         {
-            return DB.GetPrimitiveList<T>(dataReader);
+            return databaseRepository.GetPrimitiveList<T>(dataReader);
         }
 
         /// <summary>
         /// Get a IDataReader based on the System.Data.CommandType and the given parameters
         /// </summary>
-        /// <returns>System.Data.IDataReader</returns>
-        public IDataReader GetReader()
+        /// <returns>System.mData.IDataReader</returns>
+        public SqlDataReader GetReader()
         {
-            return DB.GetReader();
+            return databaseRepository.GetReader();
         }
 
         /// <summary>
@@ -184,7 +196,7 @@ namespace Framework.Data
         /// </returns>
         public T GetScalar<T>()
         {
-            return DB.GetScalar<T>();
+            return databaseRepository.GetScalar<T>();
         }
 
         /// <summary>
@@ -194,7 +206,7 @@ namespace Framework.Data
         /// <returns></returns>
         public HashSet<string> GetSchema(IDataReader dataReader)
         {
-            return DB.GetSchema(dataReader);
+            return databaseRepository.GetSchema(dataReader);
         }
 
         /// <summary>
@@ -205,7 +217,7 @@ namespace Framework.Data
         /// <returns>An System.Object that is the value of the parameter. The default value is null.</returns>
         public T GetValue<T>(string parameterName)
         {
-            return DB.GetValue<T>(parameterName);
+            return databaseRepository.GetValue<T>(parameterName);
         }
 
         /// <summary>
@@ -215,7 +227,7 @@ namespace Framework.Data
         /// <param name="parameterValue">Parameter Value</param>    
         public void In(string parameterName, object parameterValue)
         {
-            DB.In(parameterName, parameterValue);
+            databaseRepository.In(parameterName, parameterValue);
         }
 
         /// <summary>
@@ -226,7 +238,7 @@ namespace Framework.Data
         /// <param name="sqlDbType">System.Data.SqlDbType</param>
         public void In(string parameterName, object parameterValue, SqlDbType sqlDbType)
         {
-            DB.In(parameterName, parameterValue, sqlDbType);
+            databaseRepository.In(parameterName, parameterValue, sqlDbType);
         }
 
         /// <summary>
@@ -236,7 +248,7 @@ namespace Framework.Data
         /// <param name="parameterValue">Parameter Value</param>
         public void InOut(string parameterName, object parameterValue)
         {
-            DB.InOut(parameterName, parameterValue);
+            databaseRepository.InOut(parameterName, parameterValue);
         }
 
         /// <summary>
@@ -244,7 +256,7 @@ namespace Framework.Data
         /// </summary>
         public void IsProfilerEnabled()
         {
-            DB.IsProfilerEnabled();
+            databaseRepository.IsProfilerEnabled();
         }
 
         /// <summary>
@@ -253,9 +265,9 @@ namespace Framework.Data
         /// <param name="dataReader">IDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
-        public T Map<T>(IDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure
+        public T Map<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
-            return DB.Map<T>(dataReader, isUsingNextResult);
+            return databaseRepository.Map<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
@@ -266,7 +278,7 @@ namespace Framework.Data
         /// <param name="parameterValue">ParameterValue</param>     
         public void Out(string parameterName, SqlDbType sqlDbType, object parameterValue = null)
         {
-            DB.Out(parameterName, sqlDbType, parameterValue);
+            databaseRepository.Out(parameterName, sqlDbType, parameterValue);
         }
 
         /// <summary>
@@ -274,7 +286,7 @@ namespace Framework.Data
         /// </summary>
         public void Prepare()
         {
-            DB.Prepare();
+            databaseRepository.Prepare();
         }
 
         /// <summary>
@@ -283,7 +295,7 @@ namespace Framework.Data
         /// <returns>T-SQL Statement</returns>
         public string PreviewSQL()
         {
-            return DB.PreviewSQL();
+            return databaseRepository.PreviewSQL();
         }
 
         /// <summary>
@@ -292,7 +304,7 @@ namespace Framework.Data
         /// </summary>
         public void Release()
         {
-            DB.Release();
+            databaseRepository.Release();
         }
 
         /// <summary>
@@ -302,7 +314,7 @@ namespace Framework.Data
         /// <param name="statement">T-SQL Statement</param>
         public void Run(string statement, CommandType commandType = CommandType.StoredProcedure)
         {
-            DB.Run(statement, commandType);
+            databaseRepository.Run(statement, commandType);
         }
 
         /// <summary>
@@ -311,7 +323,7 @@ namespace Framework.Data
         /// <param name="databaseContext">IDatabaseContext</param>
         public void SetContext(IDatabaseContext databaseContext)
         {
-            DB.SetContext(databaseContext);
+            databaseRepository.SetContext(databaseContext);
         } 
 
         #endregion
