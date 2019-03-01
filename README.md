@@ -13,7 +13,7 @@ Technologies
 
 Full Version  | NuGet		       | Package Manager
 :------------ | :-------------|:----------------
-Framework.Data          | <img src="https://github.com/juninhodigital/Framework.Core/blob/master/nuget.svg"/> | PM > Install-Package Framework.Data
+Framework.Services.Data          | <img src="https://github.com/juninhodigital/Framework.Core/blob/master/nuget.svg"/> | PM > Install-Package Framework.Services.Data
 
 ## Contribute
 The best way to contribute is by **putting in some good words** about the library and help me out by:
