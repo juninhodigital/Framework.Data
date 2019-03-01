@@ -73,7 +73,7 @@ namespace Framework.Data
         /// whose properties will be filled with the information from the Database (using Reflection.Emit)
         /// </summary>
         /// <returns>Generic Collection List</returns>
-        IEnumerable<T> GetList<T>() where T : new();
+        IEnumerable<T> Query<T>() where T : new();
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 

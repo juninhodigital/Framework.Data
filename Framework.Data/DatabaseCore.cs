@@ -127,9 +127,9 @@ namespace Framework.Data
         /// whose properties will be filled with the information from the Database (using Reflection.Emit)
         /// </summary>
         /// <returns>Generic Collection List</returns>
-        public IEnumerable<T> GetList<T>() where T: new()
+        public IEnumerable<T> Query<T>() where T: new()
         {
-            return databaseRepository.GetList<T>();
+            return databaseRepository.Query<T>();
         }
 
         /// <summary>
