@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Framework.Services.Data</PackageId>
-    <Description>Framework.Services.Data</Description>
+    <Description>It is a .NET Core/Standard library that provides abstract methods to be use by the implementation classes based on an specific database</Description>
     <Authors>Jose Carlos de Jesus Junior</Authors>
     <Copyright>Copyright 2018</Copyright>
     <PackageLicenseUrl>https://github.com/juninhodigital/Framework.Data/blob/master/LICENSE</PackageLicenseUrl>
@@ -11,7 +11,7 @@
     <PackageIconUrl>https://github.com/juninhodigital/Framework.Core/blob/master/Icons/FS_IconSmall.png?raw=true</PackageIconUrl>
     <RepositoryUrl>https://github.com/juninhodigital/Framework.Data</RepositoryUrl>
     <PackageTags>Data Services, Data Helper, Data Library, SQL Library</PackageTags>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <NeutralLanguage>English (United States)</NeutralLanguage>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
