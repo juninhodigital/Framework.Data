@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Framework.Data
 {
     /// <summary>
     /// This class is in charge of apply dependency injection in the Data Layer
     /// </summary>
+    /// <remarks>
+    /// https://blogs.msdn.microsoft.com/jaredpar/2011/03/18/debuggerdisplay-attribute-best-practices/
+    /// </remarks>
+    [DebuggerDisplay("{DebuggerDisplayInfo,nq}")]
     public class ContainerDI
     {
-        #region| Fields |
+        #region| Properties |
 
         /// <summary>
         /// Database Context
@@ -22,6 +27,17 @@ namespace Framework.Data
         /// </summary>
         public readonly IDatabaseRepository DatabaseRepository;
 
+        /// <summary>
+        /// Debugger display information
+        /// </summary>
+        private string DebuggerDisplayInfo
+        {
+            get
+            {
+                return string.Format("Connection: {0}, timeout: {1}", DatabaseContext.ConnectionString, DatabaseContext.CommandTimeout);
+            }
+        }
+
         #endregion
 
         #region| Constructor |
@@ -35,8 +51,9 @@ namespace Framework.Data
         {
             DatabaseRepository = databaseRepository;
             DatabaseContext    = databaseContext;
-        } 
+        }
 
         #endregion
+
     }
 }
