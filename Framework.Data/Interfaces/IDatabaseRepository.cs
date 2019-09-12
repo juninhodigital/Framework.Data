@@ -46,20 +46,23 @@ namespace Framework.Data
         /// <summary>
         /// Executes a Transact-SQL statement against the connection and returns the number of rows affected 
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>The number of rows affected</returns>
-        int Execute();
+        int Execute(bool stopExecutionImmediately = true);
 
         /// <summary>
         ///  Adds or refreshes rows in a specified range in the System.Data.DataSet to match those in the data source using the System.Data.DataTable name.
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>System.Data.DataTable</returns>
-        DataTable GetDataTable();
+        DataTable GetDataTable(bool stopExecutionImmediately = true);
 
         /// <summary>
         /// Adds or refreshes rows in the System.Data.DataSet.
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>System.Data.DataSet</returns>
-        DataSet GetDataSet();
+        DataSet GetDataSet(bool stopExecutionImmediately = true);
 
         /// <summary>
         /// Get the message from the print output
@@ -118,11 +121,12 @@ namespace Framework.Data
         /// Executes the query, and returns the first column of the first row in the
         /// result set returned by the query. Additional columns or rows are ignored.
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>
         /// The first column of the first row in the result set, or a null reference if the result set is empty. 
         /// Returns a maximum of 2033 characters.
         /// </returns>
-        T GetScalar<T>();
+        T GetScalar<T>(bool stopExecutionImmediately = true);
 
         /// <summary>
         /// Returns a System.Data.DataTable that describes the column metadata of the IDataReader
@@ -197,7 +201,8 @@ namespace Framework.Data
         /// Closes the connection to the database. This is the preferred method of closing any open connection.
         /// Closes the command used to execute statements on the database
         /// </summary>
-        void Release();
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        void Release(bool stopExecutionImmediately = true);
 
         /// <summary>
         /// Configures the System.Data.CommandType and the T-SQL statement that will be executed on the Database

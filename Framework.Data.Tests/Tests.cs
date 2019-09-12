@@ -3,10 +3,10 @@ using Xunit;
 
 namespace Framework.Data.Tests
 {
-    public class UnitTest1
+    public class Tests
     {
         [Fact]
-        public void Test1()
+        public void Run()
         {
 
         }

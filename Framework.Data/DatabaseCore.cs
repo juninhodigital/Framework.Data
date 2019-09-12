@@ -88,28 +88,31 @@ namespace Framework.Data
         /// <summary>
         /// Executes a Transact-SQL statement against the connection and returns the number of rows affected 
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>The number of rows affected</returns>
-        public int Execute()
+        public int Execute(bool stopExecutionImmediately = true)
         {
-            return databaseRepository.Execute();
+            return databaseRepository.Execute(stopExecutionImmediately);
         }
 
         /// <summary>
         ///  Adds or refreshes rows in a specified range in the System.Data.DataSet to match those in the data source using the System.Data.DataTable name.
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>System.Data.DataTable</returns>
-        public DataTable GetDataTable()
+        public DataTable GetDataTable(bool stopExecutionImmediately = true)
         {
-            return databaseRepository.GetDataTable();
+            return databaseRepository.GetDataTable(stopExecutionImmediately);
         }
 
         /// <summary>
         /// Adds or refreshes rows in the System.Data.DataSet.
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>System.Data.DataSet</returns>
-        public DataSet GetDataSet()
+        public DataSet GetDataSet(bool stopExecutionImmediately = true)
         {
-            return databaseRepository.GetDataSet();
+            return databaseRepository.GetDataSet(stopExecutionImmediately);
         }
 
         /// <summary>
@@ -190,13 +193,14 @@ namespace Framework.Data
         /// Executes the query, and returns the first column of the first row in the
         /// result set returned by the query. Additional columns or rows are ignored.
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>
         /// The first column of the first row in the result set, or a null reference if the result set is empty. 
         /// Returns a maximum of 2033 characters.
         /// </returns>
-        public T GetScalar<T>()
+        public T GetScalar<T>(bool stopExecutionImmediately = true)
         {
-            return databaseRepository.GetScalar<T>();
+            return databaseRepository.GetScalar<T>(stopExecutionImmediately);
         }
 
         /// <summary>
@@ -302,9 +306,10 @@ namespace Framework.Data
         /// Closes the connection to the database. This is the preferred method of closing any open connection.
         /// Closes the command used to execute statements on the database
         /// </summary>
-        public void Release()
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        public void Release(bool stopExecutionImmediately = true)
         {
-            databaseRepository.Release();
+            databaseRepository.Release(stopExecutionImmediately);
         }
 
         /// <summary>
