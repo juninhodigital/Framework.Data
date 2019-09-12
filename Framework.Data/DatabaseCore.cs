@@ -26,13 +26,13 @@ namespace Framework.Data
         /// <summary>
         /// Default constructor 
         /// </summary>
-        /// <param name="conttainer">Dependency injection container</param>
-        public DatabaseCore(ContainerDI conttainer)
+        /// <param name="container">Dependency injection container</param>
+        public DatabaseCore(ContainerDI container)
         {
-            databaseRepository = conttainer.DatabaseRepository;
-            databaseRepository.SetContext(conttainer.DatabaseContext);
+            databaseRepository = container.DatabaseRepository;
+            databaseRepository.SetContext(container.DatabaseContext);
 
-            conttainer = null;
+            container = null;
         }       
 
         #endregion
