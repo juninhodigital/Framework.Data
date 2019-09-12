@@ -303,6 +303,14 @@ namespace Framework.Data
         }
 
         /// <summary>
+        /// Clear all sql command parameters
+        /// </summary>
+        public void ClearParameters()
+        {
+            databaseRepository.ClearParameters();
+        }
+
+        /// <summary>
         /// Closes the connection to the database. This is the preferred method of closing any open connection.
         /// Closes the command used to execute statements on the database
         /// </summary>

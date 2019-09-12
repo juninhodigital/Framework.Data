@@ -198,6 +198,11 @@ namespace Framework.Data
         string PreviewSQL();
 
         /// <summary>
+        /// Clear all sql command parameters
+        /// </summary>
+        void ClearParameters();
+        
+        /// <summary>
         /// Closes the connection to the database. This is the preferred method of closing any open connection.
         /// Closes the command used to execute statements on the database
         /// </summary>
