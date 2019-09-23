@@ -96,6 +96,17 @@ namespace Framework.Data
         }
 
         /// <summary>
+        /// Executes a Transact-SQL statement against the connection and returns the number of rows affected 
+        /// </summary>
+        /// <param name="outputParameterName">Parameter name to returned</param>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        /// <returns>The number of rows affected</returns>
+        public int Execute(string outputParameterName, bool stopExecutionImmediately = true)
+        {
+            return databaseRepository.Execute(outputParameterName, stopExecutionImmediately);
+        }
+
+        /// <summary>
         ///  Adds or refreshes rows in a specified range in the System.Data.DataSet to match those in the data source using the System.Data.DataTable name.
         /// </summary>
         /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
