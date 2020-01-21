@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 using Framework.Entity;
 
@@ -62,15 +63,15 @@ namespace Framework.Data
         }
 
         /// <summary>
-        /// Fill the property value of the Business Entity Structured Class with the information in the IDataReader
+        /// Fill the property value of the Business Entity Structured Class with the information in the SqlDataReader
         /// </summary>
-        /// <param name="dataReader">IDataReader</param>
+        /// <param name="dataReader">SqlDataReader</param>
         /// <param name="sender">Class derived from the Framework.Entity.BussinessEntityStructure class</param>
         /// <param name="type">Type of Sender</param>
         /// <param name="typeName">Gets the name of the current member.</param>
-        /// <param name="schema">List of the columns avaiable in the IDataReader</param>
+        /// <param name="schema">List of the columns avaiable in the SqlDataReader</param>
         /// <param name="mustRaiseException">Indicates whether an exception will be throw in case of failure</param>
-        public void BindList<T>(IDataReader dataReader, T sender, Type type, string typeName, HashSet<string> schema, bool mustRaiseException) where T : BusinessEntityStructure
+        public void BindList<T>(SqlDataReader dataReader, T sender, Type type, string typeName, HashSet<string> schema, bool mustRaiseException) where T : BusinessEntityStructure
         {
             databaseRepository.BindList<T>(dataReader, sender, type, typeName, schema, mustRaiseException);
         }
@@ -98,12 +99,33 @@ namespace Framework.Data
         /// <summary>
         /// Executes a Transact-SQL statement against the connection and returns the number of rows affected 
         /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        /// <returns>The number of rows affected</returns>
+        public async Task<int> ExecuteAsync(bool stopExecutionImmediately = true)
+        {
+            return await databaseRepository.ExecuteAsync(stopExecutionImmediately);
+        }
+
+        /// <summary>
+        /// Executes a Transact-SQL statement against the connection and returns the number of rows affected 
+        /// </summary>
         /// <param name="outputParameterName">Parameter name to returned</param>
         /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
         /// <returns>The number of rows affected</returns>
         public int Execute(string outputParameterName, bool stopExecutionImmediately = true)
         {
             return databaseRepository.Execute(outputParameterName, stopExecutionImmediately);
+        }
+
+        /// <summary>
+        /// Executes a Transact-SQL statement against the connection and returns the number of rows affected 
+        /// </summary>
+        /// <param name="outputParameterName">Parameter name to returned</param>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        /// <returns>The number of rows affected</returns>
+        public async Task<int> ExecuteAsync(string outputParameterName, bool stopExecutionImmediately = true)
+        {
+            return await databaseRepository.ExecuteAsync(outputParameterName, stopExecutionImmediately);
         }
 
         /// <summary>
@@ -117,6 +139,16 @@ namespace Framework.Data
         }
 
         /// <summary>
+        ///  Adds or refreshes rows in a specified range in the System.Data.DataSet to match those in the data source using the System.Data.DataTable name.
+        /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        /// <returns>System.Data.DataTable</returns>
+        public async Task<DataTable> GetDataTableAsync(bool stopExecutionImmediately = true)
+        {
+            return await databaseRepository.GetDataTableAsync(stopExecutionImmediately);
+        }
+
+        /// <summary>
         /// Adds or refreshes rows in the System.Data.DataSet.
         /// </summary>
         /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
@@ -124,6 +156,16 @@ namespace Framework.Data
         public DataSet GetDataSet(bool stopExecutionImmediately = true)
         {
             return databaseRepository.GetDataSet(stopExecutionImmediately);
+        }
+
+        /// <summary>
+        /// Adds or refreshes rows in the System.Data.DataSet.
+        /// </summary>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        /// <returns>System.Data.DataSet</returns>
+        public async Task<DataSet> GetDataSetAsync(bool stopExecutionImmediately = true)
+        {
+            return await databaseRepository.GetDataSetAsync(stopExecutionImmediately);
         }
 
         /// <summary>
@@ -150,24 +192,48 @@ namespace Framework.Data
         /// Returns a generic collection list with instances of the Business Entity Structured class 
         /// whose properties will be filled with the information from the Database  (using Reflection.Emit)
         /// </summary>
-        /// <param name="dataReader">IDataReader</param>
+        /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public IEnumerable<T> GetListOptimized<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public List<T> GetListOptimized<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return databaseRepository.GetListOptimized<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 
-        /// whose properties will be filled with the information from the Database
+        /// whose properties will be filled with the information from the Database  (using Reflection.Emit)
         /// </summary>
-        /// <param name="dataReader">IDataReader</param>
+        /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public IEnumerable<T> GetList<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public async Task<List<T>> GetListOptimizedAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        {
+            return await databaseRepository.GetListOptimizedAsync<T>(dataReader, isUsingNextResult);
+        }
+
+        /// <summary>
+        /// Returns a generic collection list with instances of the Business Entity Structured class 
+        /// whose properties will be filled with the information from the Database
+        /// </summary>
+        /// <param name="dataReader">SqlDataReader</param>
+        /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
+        /// <returns>Generic Collection List</returns>
+        public List<T> GetList<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return databaseRepository.GetList<T>(dataReader, isUsingNextResult);
+        }
+
+        /// <summary>
+        /// Returns a generic collection list with instances of the Business Entity Structured class 
+        /// whose properties will be filled with the information from the Database
+        /// </summary>
+        /// <param name="dataReader">SqlDataReader</param>
+        /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
+        /// <returns>Generic Collection List</returns>
+        public async Task<List<T>> GetListAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        {
+            return await databaseRepository.GetListAsync<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
@@ -184,20 +250,40 @@ namespace Framework.Data
         /// Retuns a generic list of primitive type whose content will be filled with the information from the Database
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="dataReader"></param>
+        /// <param name="dataReader">SqlDataReader</param>
         /// <returns></returns>
-        public List<T> GetPrimitiveList<T>(IDataReader dataReader = null) where T : IComparable, new()
+        public List<T> GetPrimitiveList<T>(SqlDataReader dataReader = null) where T : IComparable, new()
         {
             return databaseRepository.GetPrimitiveList<T>(dataReader);
         }
 
         /// <summary>
-        /// Get a IDataReader based on the System.Data.CommandType and the given parameters
+        /// Retuns a generic list of primitive type whose content will be filled with the information from the Database
         /// </summary>
-        /// <returns>System.mData.IDataReader</returns>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataReader">SqlDataReader</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetPrimitiveListAsync<T>(SqlDataReader dataReader = null) where T : IComparable, new()
+        {
+            return await databaseRepository.GetPrimitiveListAsync<T>(dataReader);
+        }
+
+        /// <summary>
+        /// Get a SqlDataReader based on the System.Data.CommandType and the given parameters
+        /// </summary>
+        /// <returns>System.Data.SqlClient.SqlDataReader</returns>
         public SqlDataReader GetReader()
         {
             return databaseRepository.GetReader();
+        }
+
+        /// <summary>
+        /// Get a SqlDataReader based on the System.Data.CommandType and the given parameters
+        /// </summary>
+        /// <returns>System.Data.SqlClient.SqlDataReader</returns>
+        public async Task<SqlDataReader> GetReaderAsync()
+        {
+            return await databaseRepository.GetReaderAsync();
         }
 
         /// <summary>
@@ -215,11 +301,25 @@ namespace Framework.Data
         }
 
         /// <summary>
-        /// Returns a System.Data.DataTable that describes the column metadata of the IDataReader
+        /// Executes the query, and returns the first column of the first row in the
+        /// result set returned by the query. Additional columns or rows are ignored.
         /// </summary>
-        /// <param name="dataReader"></param>
+        /// <param name="stopExecutionImmediately">If true, the connection will be released immediately after the t-sql statement execution. Otherwise, it will wait for the next one</param>
+        /// <returns>
+        /// The first column of the first row in the result set, or a null reference if the result set is empty. 
+        /// Returns a maximum of 2033 characters.
+        /// </returns>
+        public async Task<T> GetScalarAsync<T>(bool stopExecutionImmediately = true)
+        {
+            return await databaseRepository.GetScalarAsync<T>(stopExecutionImmediately);
+        }
+
+        /// <summary>
+        /// Returns a System.Data.DataTable that describes the column metadata of the SqlDataReader
+        /// </summary>
+        /// <param name="dataReader">SqlDataReader</param>
         /// <returns></returns>
-        public HashSet<string> GetSchema(IDataReader dataReader)
+        public HashSet<string> GetSchema(SqlDataReader dataReader)
         {
             return databaseRepository.GetSchema(dataReader);
         }
@@ -275,14 +375,33 @@ namespace Framework.Data
         }
 
         /// <summary>
+        /// Check whether the Profiler is enabled or not to log the T-SQL Statements in a log file 
+        /// </summary>
+        public async Task IsProfilerEnabledAsync()
+        {
+            await databaseRepository.IsProfilerEnabledAsync();
+        }
+
+        /// <summary>
         /// Returns an instance of the Business Entity Structured class whose properties will be filled with the information from the Database
         /// </summary>
-        /// <param name="dataReader">IDataReader</param>
+        /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
         public T Map<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return databaseRepository.Map<T>(dataReader, isUsingNextResult);
+        }
+
+        /// <summary>
+        /// Returns an instance of the Business Entity Structured class whose properties will be filled with the information from the Database
+        /// </summary>
+        /// <param name="dataReader">SqlDataReader</param>
+        /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
+        /// <returns>An instance of the Business Entity Structured class</returns>
+        public async Task<T> MapAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        {
+            return await databaseRepository.MapAsync<T>(dataReader, isUsingNextResult);
         }
 
         /// <summary>
@@ -302,6 +421,14 @@ namespace Framework.Data
         public void Prepare()
         {
             databaseRepository.Prepare();
+        }
+
+        /// <summary>
+        /// Opens a database connection with the property settings specified in the ConnectionString.
+        /// </summary>
+        public async Task PrepareAsync()
+        {
+            await databaseRepository.PrepareAsync();
         }
 
         /// <summary>
