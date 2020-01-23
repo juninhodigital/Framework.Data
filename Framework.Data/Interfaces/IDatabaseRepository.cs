@@ -243,8 +243,9 @@ namespace Framework.Data
         /// Adds the specified parameter object to the parameter collection (INPUT / OUTPUT)
         /// </summary>
         /// <param name="parameterName">Parameter Name</param>
-        /// <param name="parameterValue">Parameter Value</param>       
-        void InOut(string parameterName, object parameterValue);
+        /// <param name="parameterValue">Parameter Value</param>   
+        /// <param name="size">Size</param>
+        void InOut(string parameterName, object parameterValue, int size=0);
 
         /// <summary>
         /// Check whether the Profiler is enabled or not to log the T-SQL Statements in a log file 
