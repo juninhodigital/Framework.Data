@@ -361,10 +361,11 @@ namespace Framework.Data
         /// </summary>
         /// <param name="parameterName">Parameter Name</param>
         /// <param name="parameterValue">Parameter Value</param>
+        /// <param name="sqlDbType">SqlDbType</param>
         /// <param name="size">Size</param>
-        public void InOut(string parameterName, object parameterValue, int size=0)
+        public void InOut(string parameterName, object parameterValue, SqlDbType sqlDbType, int size)
         {
-            databaseRepository.InOut(parameterName, parameterValue, size);
+            databaseRepository.InOut(parameterName, parameterValue, sqlDbType, size);
         }
 
         /// <summary>
