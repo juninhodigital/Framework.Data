@@ -1,51 +1,31 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>Framework.Services.Data</PackageId>
-    <Description>It is a .NET Core/Standard library that provides abstract methods to be use by the implementation classes based on an specific database</Description>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
     <Authors>Jose Carlos de Jesus Junior</Authors>
-    <Copyright>Copyright 2018</Copyright>
-    <PackageLicenseUrl>https://github.com/juninhodigital/Framework.Data/blob/master/LICENSE</PackageLicenseUrl>
+    <Company>Jose Carlos de Jesus Junior</Company>
+    <Description>It is a .NET Core/Standard library that provides abstract methods to be use by the implementation classes based on an specific database</Description>
+    <Copyright>Copyright 2022</Copyright>
+    <Version>1.0.21</Version>
+    <PackageId>Framework.Services.Data</PackageId>
     <PackageProjectUrl>https://github.com/juninhodigital/Framework.Data</PackageProjectUrl>
     <PackageIconUrl>https://github.com/juninhodigital/Framework.Core/blob/master/Icons/FS_IconSmall.png?raw=true</PackageIconUrl>
-    <RepositoryUrl>https://github.com/juninhodigital/Framework.Data</RepositoryUrl>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageTags>Data Services, Data Helper, Data Library, SQL Library</PackageTags>
-    <Version>1.0.20</Version>
-    <NeutralLanguage>English (United States)</NeutralLanguage>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>Github</RepositoryType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>true</Optimize>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/juninhodigital/Framework.Data</RepositoryUrl>
+    <NeutralLanguage>English (United States)</NeutralLanguage>
+    
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Mapper\**" />
-    <EmbeddedResource Remove="Mapper\**" />
-    <None Remove="Mapper\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Framework.Services.Core" Version="1.0.7" />
-    <PackageReference Include="Framework.Services.Entity" Version="1.0.9" />
+    <PackageReference Include="Framework.Services.Core" Version="1.0.22" />
+    <PackageReference Include="Framework.Services.Entity" Version="1.0.12" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Framework.Entity">
-      <HintPath>..\..\Framework.Entity\Framework.Entity\bin\Debug\netstandard2.0\Framework.Entity.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
