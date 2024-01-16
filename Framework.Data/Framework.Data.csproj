@@ -25,7 +25,7 @@
   <ItemGroup>
     <PackageReference Include="Framework.Services.Core" Version="1.0.22" />
     <PackageReference Include="Framework.Services.Entity" Version="1.0.12" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
 </Project>
