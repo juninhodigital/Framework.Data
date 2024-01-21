@@ -9,7 +9,7 @@
     <Company>Jose Carlos de Jesus Junior</Company>
     <Description>It is a .NET Core/Standard library that provides abstract methods to be use by the implementation classes based on an specific database</Description>
     <Copyright>Copyright 2024</Copyright>
-    <Version>1.0.22</Version>
+    <Version>1.0.23</Version>
     <PackageId>Framework.Services.Data</PackageId>
     <PackageProjectUrl>https://github.com/juninhodigital/Framework.Data</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
