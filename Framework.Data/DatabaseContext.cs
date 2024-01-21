@@ -13,7 +13,7 @@ namespace Framework.Data
         /// <summary>
         ///  Gets or sets the string used to open the database.
         /// </summary>
-        public string ConnectionString { get; set; }
+        public string ConnectionString { get; set; } = string.Empty;
    
         /// <summary>
         /// Gets or sets the time in seconds to wait for the command to execute. The default is 30 seconds.

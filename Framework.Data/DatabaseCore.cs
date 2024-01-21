@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-
+using Framework.Core;
 using Framework.Entity;
 
 namespace Framework.Data
@@ -30,10 +30,13 @@ namespace Framework.Data
         /// <param name="container">Dependency injection container</param>
         public DatabaseCore(ContainerDI container)
         {
+            if (container.IsNull())
+            {
+                throw new Exception("The container is null");
+            }
+
             databaseRepository = container.DatabaseRepository;
             databaseRepository.SetContext(container.DatabaseContext);
-
-            container = null;
         }       
 
         #endregion
@@ -195,7 +198,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public List<T> GetListOptimized<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public List<T> GetListOptimized<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return databaseRepository.GetListOptimized<T>(dataReader, isUsingNextResult);
         }
@@ -207,7 +210,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public async Task<List<T>> GetListOptimizedAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public async Task<List<T>> GetListOptimizedAsync<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return await databaseRepository.GetListOptimizedAsync<T>(dataReader, isUsingNextResult);
         }
@@ -219,7 +222,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public List<T> GetList<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public List<T> GetList<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return databaseRepository.GetList<T>(dataReader, isUsingNextResult);
         }
@@ -231,7 +234,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        public async Task<List<T>> GetListAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public async Task<List<T>> GetListAsync<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return await databaseRepository.GetListAsync<T>(dataReader, isUsingNextResult);
         }
@@ -252,7 +255,7 @@ namespace Framework.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="dataReader">SqlDataReader</param>
         /// <returns></returns>
-        public List<T> GetPrimitiveList<T>(SqlDataReader dataReader = null) where T : IComparable, new()
+        public List<T> GetPrimitiveList<T>(SqlDataReader? dataReader = null) where T : IComparable, new()
         {
             return databaseRepository.GetPrimitiveList<T>(dataReader);
         }
@@ -263,7 +266,7 @@ namespace Framework.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="dataReader">SqlDataReader</param>
         /// <returns></returns>
-        public async Task<List<T>> GetPrimitiveListAsync<T>(SqlDataReader dataReader = null) where T : IComparable, new()
+        public async Task<List<T>> GetPrimitiveListAsync<T>(SqlDataReader? dataReader = null) where T : IComparable, new()
         {
             return await databaseRepository.GetPrimitiveListAsync<T>(dataReader);
         }
@@ -390,7 +393,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
-        public T Map<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public T Map<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return databaseRepository.Map<T>(dataReader, isUsingNextResult);
         }
@@ -401,7 +404,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
-        public async Task<T> MapAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
+        public async Task<T> MapAsync<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new()
         {
             return await databaseRepository.MapAsync<T>(dataReader, isUsingNextResult);
         }
@@ -412,7 +415,7 @@ namespace Framework.Data
         /// <param name="parameterName">Parameter Name</param>
         /// <param name="sqlDbType">System.Data.DbType</param>
         /// <param name="parameterValue">ParameterValue</param>     
-        public void Out(string parameterName, SqlDbType sqlDbType, object parameterValue = null)
+        public void Out(string parameterName, SqlDbType sqlDbType, object? parameterValue = null)
         {
             databaseRepository.Out(parameterName, sqlDbType, parameterValue);
         }

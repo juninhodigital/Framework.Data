@@ -123,7 +123,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        List<T> GetListOptimized<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
+        List<T> GetListOptimized<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 
@@ -132,7 +132,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        Task<List<T>> GetListOptimizedAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
+        Task<List<T>> GetListOptimizedAsync<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 
@@ -141,7 +141,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        List<T> GetList<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
+        List<T> GetList<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Returns a generic collection list with instances of the Business Entity Structured class 
@@ -150,7 +150,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>Generic Collection List</returns>
-        Task<List<T>> GetListAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
+        Task<List<T>> GetListAsync<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Check the parameter value
@@ -165,7 +165,7 @@ namespace Framework.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="dataReader">SqlDataReader</param>
         /// <returns></returns>
-        List<T> GetPrimitiveList<T>(SqlDataReader dataReader = null) where T : IComparable, new();
+        List<T> GetPrimitiveList<T>(SqlDataReader? dataReader = null) where T : IComparable, new();
 
         /// <summary>
         /// Retuns a generic list of primitive type whose content will be filled with the information from the Database
@@ -173,7 +173,7 @@ namespace Framework.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="dataReader">SqlDataReader</param>
         /// <returns></returns>
-        Task<List<T>> GetPrimitiveListAsync<T>(SqlDataReader dataReader = null) where T : IComparable, new();
+        Task<List<T>> GetPrimitiveListAsync<T>(SqlDataReader? dataReader = null) where T : IComparable, new();
 
         /// <summary>
         /// Get a SqlDataReader based on the System.Data.CommandType and the given parameters
@@ -264,7 +264,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
-        T Map<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
+        T Map<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Returns an instance of the Business Entity Structured class whose properties will be filled with the information from the Database
@@ -272,7 +272,7 @@ namespace Framework.Data
         /// <param name="dataReader">SqlDataReader</param>
         /// <param name="isUsingNextResult">Indicates if is using multiple resultsets</param>
         /// <returns>An instance of the Business Entity Structured class</returns>
-        Task<T> MapAsync<T>(SqlDataReader dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
+        Task<T> MapAsync<T>(SqlDataReader? dataReader = null, bool isUsingNextResult = false) where T : BusinessEntityStructure, new();
 
         /// <summary>
         /// Adds the specified parameter object to the parameter collection (OUTPUT)
@@ -280,7 +280,7 @@ namespace Framework.Data
         /// <param name="parameterName">Parameter Name</param>
         /// <param name="sqlDbType">System.Data.DbType</param>
         /// <param name="parameterValue">ParameterValue</param>       
-        void Out(string parameterName, SqlDbType sqlDbType, object parameterValue = null);
+        void Out(string parameterName, SqlDbType sqlDbType, object? parameterValue = null);
 
         /// <summary>
         /// Opens a database connection with the property settings specified in the ConnectionString.

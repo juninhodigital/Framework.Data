@@ -13,7 +13,7 @@ namespace Framework.Data
         /// <summary>
         /// It provides core database services
         /// </summary>
-        protected TDatabaseCore DAL = null;
+        protected TDatabaseCore? DAL = null;
 
         #endregion
 
@@ -25,7 +25,10 @@ namespace Framework.Data
         /// <param name="DI"></param>
         public DatabaseHub(ContainerDI DI)
         {
-            DAL = Activator.CreateInstance(typeof(TDatabaseCore), new object[] { DI }) as TDatabaseCore;
+            if (DI != null)
+            {
+                DAL = Activator.CreateInstance(typeof(TDatabaseCore), new object[] { DI }) as TDatabaseCore;
+            }
         }
 
         #endregion
@@ -37,7 +40,10 @@ namespace Framework.Data
         /// </summary>
         public void Dispose()
         {
-            DAL.Dispose();
+            if(DAL != null) 
+            {
+                DAL.Dispose();
+            }
 
             GC.SuppressFinalize(this);
         }
